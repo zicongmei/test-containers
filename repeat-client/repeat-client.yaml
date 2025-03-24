@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repeat-client-deployment
+  labels:
+    app: repeat-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: repeat-client
+  template:
+    metadata:
+      labels:
+        app: repeat-client
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: repeat-client
+        image: docker.io/zicongmei/repeat-client
+        command:
+          - /app/client
+        args:
+          - http://echo-server-service
+        resources:
+          limits:
+            cpu: "500m" # 500 millicores
+            memory: "256Mi" # 256 mebibytes
+
