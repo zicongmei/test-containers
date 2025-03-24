@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: repeat-client-sa
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,6 +20,7 @@ spec:
         app: repeat-client
     spec:
       terminationGracePeriodSeconds: 1
+      serviceAccountName: repeat-client-sa
       containers:
       - name: repeat-client
         image: docker.io/zicongmei/repeat-client
