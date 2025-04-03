@@ -11,6 +11,10 @@ import (
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		nodeName := os.Getenv("NODE_NAME") + os.Getenv("K_SERVICE")
+		banner := "FROM: K8S NODE "
+		if os.Getenv("K_SERVICE") != "" {
+			banner = "FROM: CLOUDRUN "
+		}
 
 		resp := map[string]string{
 			"host":   r.Host,
@@ -20,17 +24,17 @@ func main() {
 		b, err := json.Marshal(resp)
 
 		if err != nil {
-			fmt.Fprint(w, err.Error())
+			fmt.Fprint(w, err.Error()+"\n")
 			log.Print(err.Error())
 		} else {
-			fmt.Fprint(w, string(b))
+			fmt.Fprint(w, banner+string(b)+"\n")
 			log.Print(string(b))
 		}
 	})
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Default port if PORT is not set
+		port = "80" // Default port if PORT is not set
 	}
 
 	log.Printf("Server listening on port %s\n", port) // Log the port

@@ -24,7 +24,7 @@ spec:
       - name: reply-node-name
         image: docker.io/zicongmei/reply-node-name
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           limits:
             cpu: "500m" # 500 millicores
@@ -46,5 +46,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80
   type: ClusterIP
