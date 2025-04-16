@@ -24,11 +24,11 @@ func main() {
 		b, err := json.Marshal(resp)
 
 		if err != nil {
-			fmt.Fprint(w, err.Error()+"\n")
-			log.Print(err.Error())
+			fmt.Fprintf(w, "failed to marshal json: %v\n", err)
+			log.Printf("failed to marshal json: %v", err)
 		} else {
 			fmt.Fprint(w, banner+string(b)+"\n")
-			log.Print(string(b))
+			log.Printf("reply with request: %s", string(b))
 		}
 	})
 

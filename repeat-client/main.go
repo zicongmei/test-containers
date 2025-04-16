@@ -9,6 +9,18 @@ import (
 	"time"
 )
 
+var (
+	banner string
+)
+
+func init() {
+	nodeName := os.Getenv("NODE_NAME") + os.Getenv("K_SERVICE")
+	banner = "QUERY FROM: K8S NODE " + nodeName
+	if os.Getenv("K_SERVICE") != "" {
+		banner = "FROM: CLOUDRUN " + nodeName
+	}
+}
+
 func queryURL(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -23,7 +35,7 @@ func queryURL(url string) {
 		return
 	}
 
-	log.Printf("Response: %s", body)
+	log.Printf("%s: %s", banner, body)
 }
 
 func main() {
